@@ -85,22 +85,37 @@ class Data:
             retList2.append(Day2)
             return retList2
 
-    def getBeforeAfter(self,Day):
+    def getPrevious(self,Day):
         if Day == "sat":
-            return ["fri","sun"]
+            return "fri"
         elif Day == "sun":
-            return ["sat","mon"]
+            return "sat"
         elif Day == "mon":
-            return ["sun","tue"]
+            return "sun"
         elif Day == "tue":
-            return ["mon","wed"]
+            return "mon"
         elif Day == "wed":
-            return ["tue","thu"]
+            return "tue"
         elif Day == "thu":
-            return ["wed","fri"]
+            return "wed"
         elif Day == "fri":
-            return ["thu","sat"]
+            return "thu"
 
+    def getNext(self,Day):
+        if Day == "sat":
+            return "sun"
+        elif Day == "sun":
+            return "mon"
+        elif Day == "mon":
+            return "tue"
+        elif Day == "tue":
+            return "wed"
+        elif Day == "wed":
+            return "thu"
+        elif Day == "thu":
+            return "fri"
+        elif Day == "fri":
+            return "sat"
 
 
 

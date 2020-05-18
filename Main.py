@@ -7,7 +7,6 @@ City2 = Data.City2
 
 Data1 = Data()
 
-print(Data1.getRange("tue","fri"))
 
 
 
