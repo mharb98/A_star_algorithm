@@ -38,7 +38,6 @@ def check_intervals(availableList,intervals):
             departTime2 = intervals[j][1]
             arrTime2 = intervals[j][2]
             if day == day2:
-                print('koko')
                 list1 = departTime.split(":")
                 list2 = arrTime.split(":")
                 list3 = departTime2.split(":")
@@ -56,7 +55,7 @@ def A_star(departure,destination,totalTime,intervals,rangeFlight,openList):
     if departure == destination:
         for i in range(len(openList)):
             print("Travel from "+ openList[i][0] +" to "+openList[i][1]+" on "+ openList[i][2] + "day between " + openList[i][3] + " : " + openList[i][4])
-        return 
+        return
     departCity = get_city(departure,citiesList)
     citiesList.remove(departCity)
     edges = getTimetables(departCity,TimeTableList)
@@ -85,6 +84,7 @@ def A_star(departure,destination,totalTime,intervals,rangeFlight,openList):
 
     newInterval = [suitableDay,suitableDepart,suitableArr]
     intervals.append(newInterval)
+    print(departure)
     newOpen = [departure,suitableTable.city2,suitableDay,suitableDepart,suitableArr]
     openList.append(newOpen)
     totalTime = totalTime + Data1.calculateTime(suitableDepart,suitableArr)

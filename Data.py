@@ -4,19 +4,36 @@ from Flight import Flight
 from TimeTable import TimeTable
 
 class Data:
-    City1 = City("Cairo",123,456)
-    City2 = City("Casablanca",678,856)
-    Days1 = ["tue","fri"]
-    Days2 = ["sun","wed"]
-    Flight1 = Flight("11:30","12:40",1,Days1)
-    Flight2 = Flight("1:30","3:30",2,Days2)
+    Paris = City("Paris",48.85,2.35)
+    Berlin = City("Berlin",52.52,13.40)
+    Hamburg = City("Hamburg",53.55,9.99)
+    Munich = City("Munich",48.13,11.58)
+    Amsterdam = City("Amsterdam",52.36,4.89)
+    Brussels = City("Brussels",50.85,4.35)
+    Warsaw = City("Warsaw",52.22,21.01)
 
-    FlightList = [Flight1,Flight2]
+    Flights1 = Flight("11:30","1:30",1,["tue","fri"])
+    Flights2 = Flight("8:00","10:00",2,["wed","sat"])
+    Flights3 = Flight("2:00","3:00",3,["tue","thu"])
+    Flights4 = Flight("9:00","10:00",4,["fri","sat"])
+    Flights5 = Flight("8:00","10:00",5,["tue","wed"])
+    Flights6 = Flight("4:00","5:30",6,["tue","wed"])
+    Flights7 = Flight("1:00","2:00",7,["wed","sat"])
+    Flights8 = Flight("2:00","5:00",8,["wed"])
+    Flights9 = Flight("6:00","9:00",9,["wed"])
+    Flights10 = Flight("6:00","8:00",10,["wed","fri"])
 
-    TimeTable1 = TimeTable(City1,City2,FlightList)
+    Paris_Berlin = TimeTable(Paris,Berlin,[Flights1,Flights2])
+    Paris_Brussels = TimeTable(Paris,Brussels,[Flights9])
+    Brussels_Amsterdam = TimeTable(Brussels,Amsterdam,[Flights3,Flights4])
+    Amsterdam_Berlin = TimeTable(Amsterdam,Berlin,[Flights3,Flights5])
+    Amsterdam_Hamburg = TimeTable(Amsterdam,Hamburg,[Flights6,Flights5])
+    Berlin_Munich = TimeTable(Berlin,Munich,[Flights7,Flights8])
+    Hamburg_Warsaw = TimeTable(Hamburg,Warsaw,[Flights1,Flights9])
+    Munich_Warsaw = TimeTable(Munich,Warsaw,[Flights2,Flights10])
 
-    Cities = [City1,City2]
-    TimeTables = [TimeTable1]
+    Cities = [Paris,Berlin,Hamburg,Munich,Amsterdam,Brussels,Warsaw]
+    TimeTables = [Paris_Berlin,Brussels_Amsterdam,Amsterdam_Berlin,Amsterdam_Hamburg,Berlin_Munich,Hamburg_Warsaw,Munich_Warsaw]
 
     def calculateDistance(self,departure,destination):
         earth_radius = 6373.0
