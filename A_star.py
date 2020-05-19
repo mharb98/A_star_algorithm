@@ -9,84 +9,90 @@ def get_city(element,list):
         if element == list[i].name:
             return list[i]
 
-def check_interval(interval,times):
-    day = interval[0]
-    first = interval[1]
-    second = interval[2]
-    for i in times:
-        dummy = times[i]
-        if day == dummy[0]:
-            list1 = dummy[1].split(":")
-            list2 = dummy[2].split(":")
-            list3 = first.split(":")
-            list4 = second.split(":")
-            if list1[0] == list4[0]:
-                if list1[1] > list4[1]:
-                    return False
-            elif list1[0] == list4[0]:
-                if list2[1] < list3[1]:
-                    return False
-            elif list2[0] >= list3[0] or list1[0] <=list4[0]:
-                return False
-    return True
+def getTimetables(City,TimeTables):
+    name = City.name
+    retList = []
+    for i in range(len(TimeTables)):
+        if name == TimeTables[i].city1:
+            retList.append(TimeTables[i])
+    return retList
 
+def checkDays(rangeFlight,Flights):
+    retList = []
+    for k in range(len(Flights)):
+        daysList = Flights[k].days
+        for i in range(len(rangeFlight)):
+            for j in range(len(daysList)):
+                if rangeFlight[i] == daysList[j]:
+                    retList.append([daysList[j],Flights[k].departureTime,Flights[k].arrivalTime])
+    return retList
 
-def get_timetable(departure,destination,rangeFlight,intervals,list):
-    for i in range(len(list)):
-        if departure == list[i].departure and destination == list[i].destination:
-            dummy = list[i]
-    Flights = dummy.Flights
-    for i in range(len(Flights)):
-        days = Flights[i].days
-        if rangeFlight[0] in days or rangeFlight[1] in days:
-            for day in range(len(days)):
-                list = [day[i],Flights[i].departure,Flights[i].destination]
-                if check_interval(list,intervals):
-                    return [day,Flights[i]]
-    return []
+def check_intervals(availableList,intervals):
+    for i in range(len(availableList)):
+        av = availableList[i]
+        day = av[0]
+        departTime = av[1]
+        arrTime = av[2]
+        for j in range(len(intervals)):
+            day2 = intervals[j][0]
+            departTime2 = intervals[j][1]
+            arrTime2 = intervals[j][2]
+            if day == day2:
+                print('koko')
+                list1 = departTime.split(":")
+                list2 = arrTime.split(":")
+                list3 = departTime2.split(":")
+                list4 = arrTime2.split(":")
+                if list1[0] <= list4[0] or list2[0] >= list3[0]:
+                    return []
+                elif list1[0] == list4[0] and list1[1] <= list4[1]:
+                    return []
+                elif list2[0] == list3[0] and list2[1] >= list4[1]:
+                    return []
+            return av
+    return availableList[0]
 
-
-def time_difference(first_time,second_time):
-    first_time = 5
-
-def A_star(citiesList,departure,destination,rangeFlight,open,totalTime,intervals):
+def A_star(departure,destination,totalTime,intervals,rangeFlight,openList):
     if departure == destination:
-        return open
-    start = get_city(departure,citiesList)
-    citiesList.remove(start)
-    heuristic = 100000
-    theFlight = None
-    theCountry = None
-    day = None
-    flighTime = 0
-    heuristicList = []
-    for i in range(len(citiesList)):
-        next = citiesList[i]
-        dummyDistance = Data1.calculateDistance(start,next)
-        if get_timetable(departure,next.name,rangeFlight,open,TimeTableList)==[]:
-            day1 = Data1.getPrevious(rangeFlight[0])
-            day2 = Data1.getNext(rangeFlight[1])
-            newRange = [day1,day2]
-            [day, FlightDummy] = get_timetable(departure, next.name, newRange , open, TimeTableList)
-        else:
-            [day,FlightDummy] = get_timetable(departure,next.name,rangeFlight,open,TimeTableList)
-        timeDummy = Data1.calculateTime(FlightDummy)
-        dummyHeuristic = totalTime + dummyDistance + timeDummy
-        if dummyHeuristic < heuristic:
-            theFlight = FlightDummy
-            heuristic = dummyHeuristic
-            flighTime = timeDummy
-            theCountry = next.name
-    heuristicList.append(heuristic)
-    totalTime = totalTime + flighTime
-    if len(open) > 0:
-        extraTime = open[len(open)-2][3]
-        totalTime = totalTime + time_difference(extraTime,theFlight.departure)
-        if totalTime >= 12:
-            totalTime = 0;
-            rangeFlight[0] = Data1.getNext(rangeFlight[0])
-    dummyList = [day,theFlight.departure,theFlight.destination]
-    otherList = [departure,theCountry,day,theFlight.departure,theFlight.destination]
-    open.append(otherList)
-    intervals.append(dummyList)
-    A_star(citiesList,theCountry,destination,rangeFlight,open,totalTime,intervals)
+        return openList
+    departCity = get_city(departure,citiesList)
+    citiesList.remove(departCity)
+    edges = getTimetables(departCity,TimeTableList)
+    dummyHeuristic = 100000
+    suitableDay = None
+    suitableDepart = None
+    suitableArr = None
+    suitableTable = None
+    for i in range(len(edges)):
+        flightsList = edges[i].Flights
+        availableList = checkDays(rangeFlight,flightsList)
+        if len(availableList) > 0:
+            interval = check_intervals(availableList,intervals)
+            if len(interval) > 0:
+                futureCity = get_city(edges[i].city2,citiesList)
+                if futureCity.name == departure:
+                    heuristic = Data1.calculateTime(interval[1],interval[2])
+                else:
+                    heuristic = Data1.calculateDistance(departCity,futureCity) + Data1.calculateTime(interval[1],interval[2])
+                if heuristic < dummyHeuristic:
+                    dummyHeuristic = heuristic
+                    suitableDay = interval[0]
+                    suitableTable = edges[i]
+                    suitableDepart = interval[1]
+                    suitableArr = interval[2]
+
+    newInterval = [suitableDay,suitableDepart,suitableArr]
+    intervals.append(newInterval)
+    newOpen = [departure,suitableTable.city2,suitableDay,suitableDepart,suitableArr]
+    openList.append(newOpen)
+    totalTime = totalTime + Data1.calculateTime(suitableDepart,suitableArr)
+    if len(openList) > 0:
+        time2 = openList[len(openList)-1][4]
+        totalTime = totalTime + Data1.calculateTime(time2,suitableDepart)
+    if totalTime >= 12:
+        rangeFlight[0] = Data1.getNext(rangeFlight[0])
+        totalTime = totalTime - 12
+    A_star(suitableTable.city2,destination,totalTime,intervals,rangeFlight,openList)
+
+
+

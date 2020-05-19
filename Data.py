@@ -34,9 +34,7 @@ class Data:
 
         return earth_radius*dummy2
 
-    def calculateTime(self,flight1):
-        time1 = flight1.departure
-        time2 = flight1.destination
+    def calculateTime(self,time1,time2):
         time1_list = time1.split(":")
         time2_list = time2.split(":")
         dummy1 = abs(int(time1_list[0]) - int(time2_list[0]))
@@ -61,7 +59,7 @@ class Data:
             return "sat"
 
     def getRange(self,Day1,Day2):
-        daysArray = ["sun","mon","tue","wed","thu","fri","sat"]
+        daysArray = ["sat","sun","mon","tue","wed","thu","fri"]
         index1 = daysArray.index(Day1)
         index2 = daysArray.index(Day2)
         retList = []
