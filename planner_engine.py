@@ -1,15 +1,16 @@
-from Data import  Data
+from data import  Data
+
 
 Data1 = Data()
 citiesList = Data1.Cities
 TimeTableList = Data1.TimeTables
 
-def get_city(element,list):
+def get_city(element, list):
     for i in range(len(list)):
         if element == list[i].name:
             return list[i]
 
-def getTimetables(City,TimeTables):
+def getTimetables(City, TimeTables):
     name = City.name
     retList = []
     for i in range(len(TimeTables)):
@@ -17,7 +18,7 @@ def getTimetables(City,TimeTables):
             retList.append(TimeTables[i])
     return retList
 
-def checkDays(rangeFlight,Flights):
+def checkDays(rangeFlight, Flights):
     retList = []
     for k in range(len(Flights)):
         daysList = Flights[k].days
@@ -27,7 +28,7 @@ def checkDays(rangeFlight,Flights):
                     retList.append([daysList[j],Flights[k].departureTime,Flights[k].arrivalTime])
     return retList
 
-def check_intervals(availableList,intervals):
+def check_intervals(availableList, intervals):
     for i in range(len(availableList)):
         av = availableList[i]
         day = av[0]
@@ -52,7 +53,7 @@ def check_intervals(availableList,intervals):
             return av
     return availableList[0]
 
-def A_star(departure,destination,totalTime,intervals,rangeFlight,openList):
+def A_star(departure, destination, totalTime, intervals, rangeFlight, openList):
     if departure == destination:
         for i in range(len(openList)):
             print("Travel from "+ openList[i][0] +" to "+openList[i][1]+" on "+ openList[i][2] + "day between " + openList[i][3] + " : " + openList[i][4])
@@ -94,7 +95,7 @@ def A_star(departure,destination,totalTime,intervals,rangeFlight,openList):
     if totalTime >= 12:
         rangeFlight[0] = Data1.getNext(rangeFlight[0])
         totalTime = totalTime - 12
-    A_star(suitableTable.city2,destination,totalTime,intervals,rangeFlight,openList)
+    A_star(suitableTable.city2, destination, totalTime, intervals, rangeFlight, openList)
 
 
 

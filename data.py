@@ -1,15 +1,16 @@
 import math
-from City import City
-from Flight import Flight
-from TimeTable import TimeTable
+from city import City
+from flight import Flight
+from time_table import TimeTable
 
 class Data:
-    City1 = City("Cairo",123,456)
-    City2 = City("Casablanca",678,856)
-    Days1 = ["tue","fri"]
-    Days2 = ["sun","wed"]
-    Flight1 = Flight("11:30","12:40",1,Days1)
-    Flight2 = Flight("1:30","3:30",2,Days2)
+
+    City1 = City("Cairo", 123, 456)
+    City2 = City("Casablanca", 678, 856)
+    Days1 = ["tue", "fri"]
+    Days2 = ["sun", "wed"]
+    Flight1 = Flight("11:30", "12:40", 1, Days1)
+    Flight2 = Flight("1:30", "3:30", 2, Days2)
 
     FlightList = [Flight1,Flight2]
 
