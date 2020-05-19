@@ -34,9 +34,7 @@ class Data:
 
         return earth_radius*dummy2
 
-    def calculateTime(self,flight1):
-        time1 = flight1.departure
-        time2 = flight1.destination
+    def calculateTime(self,time1,time2):
         time1_list = time1.split(":")
         time2_list = time2.split(":")
         dummy1 = abs(int(time1_list[0]) - int(time2_list[0]))
@@ -61,7 +59,7 @@ class Data:
             return "sat"
 
     def getRange(self,Day1,Day2):
-        daysArray = ["sun","mon","tue","wed","thu","fri","sat"]
+        daysArray = ["sat","sun","mon","tue","wed","thu","fri"]
         index1 = daysArray.index(Day1)
         index2 = daysArray.index(Day2)
         retList = []
@@ -85,22 +83,37 @@ class Data:
             retList2.append(Day2)
             return retList2
 
-    def getBeforeAfter(self,Day):
+    def getPrevious(self,Day):
         if Day == "sat":
-            return ["fri","sun"]
+            return "fri"
         elif Day == "sun":
-            return ["sat","mon"]
+            return "sat"
         elif Day == "mon":
-            return ["sun","tue"]
+            return "sun"
         elif Day == "tue":
-            return ["mon","wed"]
+            return "mon"
         elif Day == "wed":
-            return ["tue","thu"]
+            return "tue"
         elif Day == "thu":
-            return ["wed","fri"]
+            return "wed"
         elif Day == "fri":
-            return ["thu","sat"]
+            return "thu"
 
+    def getNext(self,Day):
+        if Day == "sat":
+            return "sun"
+        elif Day == "sun":
+            return "mon"
+        elif Day == "mon":
+            return "tue"
+        elif Day == "tue":
+            return "wed"
+        elif Day == "wed":
+            return "thu"
+        elif Day == "thu":
+            return "fri"
+        elif Day == "fri":
+            return "sat"
 
 
 
