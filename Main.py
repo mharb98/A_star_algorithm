@@ -6,7 +6,7 @@ Flight22 = Data.Flight2
 City1 = Data.City1
 City2 = Data.City2
 
-print(A_star("Cairo","Casablanca",0,[],["tue","wed"],[]))
+A_star("Cairo","Casablanca",0,[],["tue","wed"],[])
 
 
 

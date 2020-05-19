@@ -54,7 +54,9 @@ def check_intervals(availableList,intervals):
 
 def A_star(departure,destination,totalTime,intervals,rangeFlight,openList):
     if departure == destination:
-        return openList
+        for i in range(len(openList)):
+            print("Travel from "+ openList[i][0] +" to "+openList[i][1]+" on "+ openList[i][2] + "day between " + openList[i][3] + " : " + openList[i][4])
+        return 
     departCity = get_city(departure,citiesList)
     citiesList.remove(departCity)
     edges = getTimetables(departCity,TimeTableList)
