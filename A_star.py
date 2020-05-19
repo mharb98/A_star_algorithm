@@ -84,7 +84,6 @@ def A_star(departure,destination,totalTime,intervals,rangeFlight,openList):
 
     newInterval = [suitableDay,suitableDepart,suitableArr]
     intervals.append(newInterval)
-    print(departure)
     newOpen = [departure,suitableTable.city2,suitableDay,suitableDepart,suitableArr]
     openList.append(newOpen)
     totalTime = totalTime + Data1.calculateTime(suitableDepart,suitableArr)
