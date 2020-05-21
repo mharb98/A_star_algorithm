@@ -17,6 +17,12 @@ def getTimetables(City,TimeTables):
             retList.append(TimeTables[i])
     return retList
 
+list = getTimetables(Data1.Paris,TimeTableList)
+for i in range(len(list)):
+    print(list[i].city2)
+
+
+
 def checkDays(rangeFlight,Flights):
     retList = []
     for k in range(len(Flights)):
@@ -43,11 +49,11 @@ def check_intervals(availableList,intervals):
                 list3 = departTime2.split(":")
                 list4 = arrTime2.split(":")
                 if list1[0] <= list4[0] or list2[0] >= list3[0]:
-                    return []
+                    continue
                 elif list1[0] == list4[0] and list1[1] <= list4[1]:
-                    return []
+                    continue
                 elif list2[0] == list3[0] and list2[1] >= list4[1]:
-                    return []
+                    continue
             return av
     return availableList[0]
 
@@ -75,6 +81,7 @@ def A_star(departure,destination,totalTime,intervals,rangeFlight,openList):
                     heuristic = Data1.calculateTime(interval[1],interval[2])
                 else:
                     heuristic = Data1.calculateDistance(departCity,futureCity) + Data1.calculateTime(interval[1],interval[2])
+                print(heuristic,edges[i].city2)
                 if heuristic < dummyHeuristic:
                     dummyHeuristic = heuristic
                     suitableDay = interval[0]

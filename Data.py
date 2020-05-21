@@ -33,7 +33,7 @@ class Data:
     Munich_Warsaw = TimeTable(Munich,Warsaw,[Flights2,Flights10])
 
     Cities = [Paris,Berlin,Hamburg,Munich,Amsterdam,Brussels,Warsaw]
-    TimeTables = [Paris_Berlin,Brussels_Amsterdam,Amsterdam_Berlin,Amsterdam_Hamburg,Berlin_Munich,Hamburg_Warsaw,Munich_Warsaw]
+    TimeTables = [Paris_Berlin,Paris_Brussels,Brussels_Amsterdam,Amsterdam_Berlin,Amsterdam_Hamburg,Berlin_Munich,Hamburg_Warsaw,Munich_Warsaw]
 
     def calculateDistance(self,departure,destination):
         earth_radius = 6373.0
